@@ -1,0 +1,20 @@
+services:
+  web:
+    image: nginx:latest
+    privileged: true
+    network_mode: host
+    cap_add:
+      - SYS_ADMIN
+    user: root
+    container_name: web
+    ports:
+      - "0.0.0.0:80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc:/host-etc
+    environment:
+      DB_PASSWORD: hunter2supersecret
+      API_KEY: abcdef123456
+      SAFE_URL: ${FROM_ENV}
+    logging:
+      driver: json-file
